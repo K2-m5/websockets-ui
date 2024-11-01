@@ -13,7 +13,7 @@ export const removeWebSocketFromDB = (id: string) => {
 
 export const getUserIndex = (ws: WebSocket) => {
   const map = DB.wsMap;
-  for (let [key, value] of map.entries()) {
+  for (const [key, value] of map.entries()) {
     if (value === ws) return key;
   }
   return '';
@@ -29,4 +29,9 @@ const removeRoomFromDB = (userId: string) => {
     item.roomUsers.some((user) => user.index === userId),
   );
   DB.rooms.splice(index, 1);
+};
+
+export const getWebSocketFromDB = (id: string) => {
+  const ws = DB.wsMap.get(id);
+  return ws;
 };

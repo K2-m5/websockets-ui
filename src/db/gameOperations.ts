@@ -1,4 +1,4 @@
-import { Player, Room } from '../types';
+import { Player, Room, TPlayer } from '../types';
 import { uuidGenerator } from '../utils/uuidGenerator';
 import * as DB from './db';
 
@@ -49,13 +49,18 @@ export const addUserToRoom = (indexRoom: string, indexUser: string) => {
   return roomUsers;
 };
 
-export const createGame = (indexUser: string) => {
+export const createGame = (players: TPlayer[]) => {
   const newGame = {
     idGame: uuidGenerator(),
-    idPlayer: indexUser,
+    players,
   };
 
   DB.games.push(newGame);
 
   return newGame;
+};
+
+export const removeRoom = (indexRoom: string) => {
+  const index = DB.rooms.findIndex((item) => item.roomId === indexRoom);
+  DB.rooms.splice(index, 1);
 };
